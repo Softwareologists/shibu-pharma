@@ -31,22 +31,22 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
         >
           <div class="about-content">
             <span
-              class="block uppercase text-sm font-semibold text-[var(--color-primary)] tracking-wider mb-4"
+              class="block uppercase text-sm font-semibold text-primary tracking-wider mb-4"
               >{label}</span
             >
             <h2 class="text-4xl mb-6">{title}</h2>
-            <p class="text-[var(--color-text-muted)] mb-4 text-[1.1rem]">
+            <p class="text-text-muted mb-4 text-[1.1rem]">
               {description1}
             </p>
-            <p class="text-[var(--color-text-muted)] mb-4 text-[1.1rem]">
+            <p class="text-text-muted mb-4 text-[1.1rem]">
               {description2}
             </p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {
               stats.map((stat) => (
-                <div class="bg-[var(--color-accent)] p-8 rounded-xl text-center">
-                  <h3 class="text-4xl text-[var(--color-primary-dark)] mb-2 font-bold">
+                <div class="bg-accent p-8 rounded-xl text-center">
+                  <h3 class="text-4xl text-primary-dark mb-2 font-bold">
                     {stat.value}
                   </h3>
                   <p>{stat.label}</p>
@@ -58,7 +58,7 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
       </div>
     </section>
 
-    <section id="products" class="section bg-[var(--color-surface)]">
+    <section id="products" class="section bg-surface">
       <div class="container">
         <div
           class="flex flex-col md:flex-row justify-between items-center mb-12"
@@ -72,28 +72,28 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
             topCategories.map((category) => (
               <a
                 href={`/products?category=${category.slug}`}
-                class="category-card group block bg-white border border-gray-200 rounded-xl p-6 transition-all duration-200 hover:-translate-y-2 hover:shadow-xl hover:border-[var(--color-primary)]"
+                class="category-card group block bg-white border border-gray-200 rounded-xl p-6 transition-all duration-200 hover:-translate-y-2 hover:shadow-xl hover:border-primary"
               >
                 <div class="flex items-center justify-between mb-4">
-                  <div class="w-14 h-14 rounded-full bg-[var(--color-accent)] flex items-center justify-center group-hover:bg-[var(--color-primary)] transition-colors">
+                  <div class="w-14 h-14 rounded-full bg-accent flex items-center justify-center group-hover:bg-primary transition-colors">
                     <CategoryLogo
                       categoryName={category.name}
                       logoPaths={category.logoPaths}
-                      class="text-[var(--color-primary)] group-hover:text-white transition-colors w-7 h-7"
+                      class="text-primary group-hover:text-white transition-colors w-7 h-7"
                     />
                   </div>
-                  <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-primary)] text-white font-bold text-lg">
+                  <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white font-bold text-lg">
                     {category.count}
                   </span>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+                <h3 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                   {category.name}
                 </h3>
-                <p class="text-sm text-[var(--color-text-muted)] mb-4">
+                <p class="text-sm text-text-muted mb-4">
                   {category.count}{" "}
                   {category.count === 1 ? "Product" : "Products"} Available
                 </p>
-                <div class="flex items-center text-[var(--color-primary)] font-medium text-sm">
+                <div class="flex items-center text-primary font-medium text-sm">
                   Explore{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -141,26 +141,26 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
     <section id="contact" class="section">
       <div class="container">
         <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 bg-[var(--color-surface)] rounded-[20px] p-8 md:p-16"
+          class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 bg-surface rounded-[20px] p-8 md:p-16"
         >
           <div class="contact-info">
             <h2 class="text-4xl mb-4 font-bold">{contactTitle}</h2>
             <p>{contactSubtitle}</p>
             <div class="mt-12">
               <div class="mb-8">
-                <strong class="block text-[var(--color-primary)] mb-2"
+                <strong class="block text-primary mb-2"
                   >Headquarters</strong
                 >
                 <p>123 Pharma Way, Medical District, Mumbai, India</p>
               </div>
               <div class="mb-8">
-                <strong class="block text-[var(--color-primary)] mb-2"
+                <strong class="block text-primary mb-2"
                   >Email</strong
                 >
                 <p>info@shibupharma.com</p>
               </div>
               <div class="mb-8">
-                <strong class="block text-[var(--color-primary)] mb-2"
+                <strong class="block text-primary mb-2"
                   >Phone</strong
                 >
                 <p>+91 123 456 7890</p>
@@ -170,7 +170,7 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
           <div class="contact-form-box">
             <form
               class="flex flex-col gap-6"
-              onsubmit="event.preventDefault(); alert('Thank you for your message! This is a demo.');"
+              onsubmit="event.preventDefault(); alert('Thank you for your message! We will get in touch');"
             >
               <div class="flex flex-col gap-2">
                 <label for="name" class="font-medium">Name</label>
@@ -179,7 +179,7 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
                   id="name"
                   required
                   placeholder="Your Name"
-                  class="p-3 border border-gray-200 rounded-md focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-accent)]"
+                  class="p-3 border border-gray-200 rounded-md focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
                 />
               </div>
               <div class="flex flex-col gap-2">
@@ -189,7 +189,7 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
                   id="email"
                   required
                   placeholder="your@email.com"
-                  class="p-3 border border-gray-200 rounded-md focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-accent)]"
+                  class="p-3 border border-gray-200 rounded-md focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
                 />
               </div>
               <div class="flex flex-col gap-2">
@@ -199,7 +199,7 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
                   rows="4"
                   required
                   placeholder="How can we help?"
-                  class="p-3 border border-gray-200 rounded-md focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-accent)]"
+                  class="p-3 border border-gray-200 rounded-md focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
                 ></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Send Message</button

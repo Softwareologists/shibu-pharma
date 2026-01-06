@@ -89,7 +89,7 @@ if (searchQuery) queryParams.q = searchQuery;
       <div class="container">
         <!-- Integrated Title + Search Panel -->
         <div class="max-w-3xl mx-auto mb-12 text-center">
-          <h1 class="text-4xl md:text-5xl font-bold text-[var(--color-primary-dark)] mb-6">
+          <h1 class="text-4xl md:text-5xl font-bold text-primary-dark mb-6">
             {selectedCategoryName
               ? `${selectedCategoryName} Products`
               : 'Our Medicines'}
@@ -97,8 +97,8 @@ if (searchQuery) queryParams.q = searchQuery;
 
           <!-- Search Form -->
           <form method="GET" action="/products">
-          <div class="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-xl px-4 py-3 transition-all focus-within:border-[var(--color-primary)] focus-within:ring-4 focus-within:ring-[var(--color-accent)]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-400 flex-shrink-0">
+          <div class="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-xl px-4 py-3 transition-all focus-within:border-primary focus-within:ring-4 focus-within:ring-accent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-400 shrink-0">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.35-4.35"></path>
             </svg>
@@ -107,21 +107,21 @@ if (searchQuery) queryParams.q = searchQuery;
               name="q"
               placeholder="Search products by name, description, or category..."
               value={searchQuery || ''}
-              class="flex-1 border-none outline-none text-base bg-transparent placeholder:text-gray-400"
+              class="flex-1 border-none outline-hidden text-base bg-transparent placeholder:text-gray-400"
               aria-label="Search products"
             />
             {categorySlug && <input type="hidden" name="category" value={categorySlug} />}
             {sortParam && sortParam !== 'newest' && <input type="hidden" name="sort" value={sortParam} />}
-            <button type="submit" class="bg-[var(--color-primary)] text-white px-5 py-2 rounded-lg font-semibold hover:bg-[var(--color-primary-dark)] transition-all hover:-translate-y-0.5">
+            <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg font-semibold hover:bg-primary-dark transition-all hover:-translate-y-0.5">
               Search
             </button>
           </div>
           {searchQuery && (
-            <div class="flex items-center justify-between mt-4 px-4 py-3 bg-[var(--color-accent)] rounded-lg">
+            <div class="flex items-center justify-between mt-4 px-4 py-3 bg-accent rounded-lg">
               <p class="m-0 text-gray-700">
                 Searching for: <strong>"{searchQuery}"</strong>
               </p>
-              <a href={`/products${categorySlug ? `?category=${categorySlug}` : ''}`} class="text-[var(--color-primary)] no-underline font-semibold hover:opacity-70 transition-opacity">
+              <a href={`/products${categorySlug ? `?category=${categorySlug}` : ''}`} class="text-primary no-underline font-semibold hover:opacity-70 transition-opacity">
                 Clear search
               </a>
             </div>
@@ -139,7 +139,7 @@ if (searchQuery) queryParams.q = searchQuery;
 
           <div class="hidden md:block flex-1 min-w-4"></div>
 
-          <div class="w-full md:w-auto order-first md:order-none text-center md:text-left">
+          <div class="w-full md:w-auto order-first md:order-0 text-center md:text-left">
             <p class="text-gray-600 text-sm m-0">
               Showing <strong class="text-gray-900 font-semibold">{startIndex + 1}-{Math.min(endIndex, totalProducts)}</strong> of <strong class="text-gray-900 font-semibold">{totalProducts}</strong> products
             </p>

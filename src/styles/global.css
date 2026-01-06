@@ -24,26 +24,22 @@ html {
   box-sizing: border-box; 
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-.btn {
+@utility btn {
   @apply inline-block px-6 py-3 rounded-md font-medium text-center transition-colors duration-200 border border-transparent cursor-pointer;
 }
 
-.btn-primary {
+@utility btn-primary {
   @apply bg-primary text-white hover:bg-primary-dark;
 }
 
-.btn-outline {
+@utility btn-outline {
   @apply border-primary text-primary bg-transparent hover:bg-accent;
 }
 
-.section {
+@utility section {
   @apply py-20;
 }
 
-.container {
+@utility container {
   @apply w-full max-w-container mx-auto px-6;
 }

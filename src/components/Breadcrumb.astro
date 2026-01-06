@@ -23,18 +23,18 @@ const breadcrumbListJsonLd = {
 };
 ---
 
-<nav aria-label="Breadcrumb" class="bg-[var(--color-surface)] border-b border-gray-200 py-4">
+<nav aria-label="Breadcrumb" class="bg-surface border-b border-gray-200 py-4">
   <div class="container">
     <ol class="flex flex-wrap items-center gap-2 list-none m-0 p-0">
       {items.map((item, index) => (
         <li class="flex items-center gap-2">
           {index < items.length - 1 && item.href ? (
             <>
-              <a href={item.href} class="text-[var(--color-text-muted)] no-underline text-sm sm:text-xs transition-colors hover:text-[var(--color-primary)] hover:underline">{item.label}</a>
-              <span class="text-[var(--color-text-muted)] text-sm sm:text-xs select-none" aria-hidden="true">/</span>
+              <a href={item.href} class="text-text-muted no-underline text-sm sm:text-xs transition-colors hover:text-primary hover:underline">{item.label}</a>
+              <span class="text-text-muted text-sm sm:text-xs select-none" aria-hidden="true">/</span>
             </>
           ) : (
-            <span class="text-[var(--color-text)] text-sm sm:text-xs font-medium" aria-current="page">{item.label}</span>
+            <span class="text-(--color-text) text-sm sm:text-xs font-medium" aria-current="page">{item.label}</span>
           )}
         </li>
       ))}

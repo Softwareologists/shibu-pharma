@@ -7,9 +7,9 @@ const heroEntry = await getEntry("hero", "hero");
 const { title, subtitle, primaryCta, secondaryCta } = heroEntry.data;
 ---
 
-<section class="py-24 overflow-hidden bg-[var(--color-surface)]">
+<section class="py-24 overflow-hidden bg-surface">
   <div
-    class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center text-center md:text-left"
+    class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-center md:text-left"
   >
     <div class="hero-content">
       <h1
@@ -31,8 +31,6 @@ const { title, subtitle, primaryCta, secondaryCta } = heroEntry.data;
       <Image
         src={heroImage}
         alt={title}
-        width={600}
-        height={600}
         class="w-full h-auto rounded-2xl"
         style={{
           // 1. Horizontal Fade (Left & Right edges)

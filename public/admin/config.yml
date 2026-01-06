@@ -7,8 +7,8 @@ backend:
 # local_backend: true
 
 # Media Library Configuration
-media_folder: "public/images/products"
-public_folder: "/images/products"
+media_folder: "public/images"
+public_folder: "/images"
 
 # Publishing Mode
 publish_mode: simple
@@ -74,6 +74,8 @@ collections:
     format: "json"
     editor:
       preview: false
+    media_folder: "public/images/products"
+    public_folder: "/images/products"
     fields:
       - { label: "Product Name", name: "title", widget: "string", required: true, hint: "Full product name (e.g., Aceclofenac-100)" }
       - { label: "Short Description", name: "description", widget: "string", required: true, hint: "Brief description shown in product cards" }
@@ -210,3 +212,21 @@ collections:
         fields:
           - { label: "Section Title", name: "title", widget: "string", required: true }
           - { label: "Section Subtitle", name: "subtitle", widget: "string", required: true }
+
+  # ===========================
+  # MEDIA MANAGEMENT
+  # ===========================
+  - name: "media"
+    label: "Media Management"
+    files:
+      - label: "All Images"
+        name: "images"
+        file: "src/content/site/media-info.json"
+        format: "json"
+        media_folder: "public/images"
+        public_folder: "/images"
+        fields:
+          - label: "Media Library Info"
+            name: "info"
+            widget: "hidden"
+            default: "This section is for managing all site images. Use the media button above to view, upload, and organize images from all folders (products, categories, etc.)"

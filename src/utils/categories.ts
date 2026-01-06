@@ -6,27 +6,33 @@ export interface CategoryInfo {
     count: number;
     logoPath: string;
     logoPaths: string[];
+    description?: string;
 }
 
 /**
- * Get all unique categories from products with product counts
+ * Get all categories from the categories collection with product counts
  */
 export async function getAllCategories(): Promise<CategoryInfo[]> {
-    const products = await getCollection('products');
+    const [categoriesCollection, products] = await Promise.all([
+        getCollection('categories'),
+        getCollection('products')
+    ]);
 
-    const categoryMap = new Map<string, number>();
-
+    // Count products per category
+    const categoryProductCounts = new Map<string, number>();
     products.forEach(product => {
         const category = product.data.category;
-        categoryMap.set(category, (categoryMap.get(category) || 0) + 1);
+        categoryProductCounts.set(category, (categoryProductCounts.get(category) || 0) + 1);
     });
 
-    const categories: CategoryInfo[] = Array.from(categoryMap.entries()).map(([name, count]) => ({
-        name,
-        slug: name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and'),
-        count,
-        logoPath: getCategoryLogoPath(name),
-        logoPaths: getCategoryLogoPaths(name),
+    // Build category info from categories collection
+    const categories: CategoryInfo[] = categoriesCollection.map(category => ({
+        name: category.data.name,
+        slug: category.data.slug,
+        count: categoryProductCounts.get(category.data.name) || 0,
+        logoPath: getCategoryLogoPath(category.data.name, category.data.image),
+        logoPaths: getCategoryLogoPaths(category.data.name, category.data.image),
+        description: category.data.description,
     }));
 
     return categories;
@@ -59,14 +65,15 @@ export function getCategorySlug(categoryName: string): string {
  * Get category name from slug
  */
 export async function getCategoryFromSlug(slug: string): Promise<string | null> {
-    const categories = await getAllCategories();
-    const category = categories.find(cat => cat.slug === slug);
-    return category ? category.name : null;
+    const categories = await getCollection('categories');
+    const category = categories.find(cat => cat.data.slug === slug);
+    return category ? category.data.name : null;
 }
 
 /**
  * Convert category name to logo filename (without extension)
  * Replaces spaces with underscores, & with underscore
+ * This maintains backward compatibility with existing naming convention
  */
 export function getCategoryLogoBasename(categoryName: string): string {
     return categoryName
@@ -77,9 +84,28 @@ export function getCategoryLogoBasename(categoryName: string): string {
 
 /**
  * Get possible category logo paths in priority order
- * Returns array: [SVG path, PNG path, WebP path]
+ * Now supports custom image from category data
+ * @param categoryName - Category name for fallback convention
+ * @param customImage - Custom image path from category data (optional)
  */
-export function getCategoryLogoPaths(categoryName: string): string[] {
+export function getCategoryLogoPaths(categoryName: string, customImage?: string): string[] {
+    // If custom image is provided in category data, use it first
+    if (customImage) {
+        return [
+            customImage,
+            // Fallback to convention-based paths
+            ...getConventionBasedLogoPaths(categoryName)
+        ];
+    }
+
+    // Otherwise use convention-based paths
+    return getConventionBasedLogoPaths(categoryName);
+}
+
+/**
+ * Get convention-based logo paths (backward compatibility)
+ */
+function getConventionBasedLogoPaths(categoryName: string): string[] {
     const basename = getCategoryLogoBasename(categoryName);
     return [
         `/images/categories/${basename}.svg`,
@@ -89,8 +115,8 @@ export function getCategoryLogoPaths(categoryName: string): string[] {
 }
 
 /**
- * Get primary category logo path (SVG first)
+ * Get primary category logo path (custom or SVG first)
  */
-export function getCategoryLogoPath(categoryName: string): string {
-    return getCategoryLogoPaths(categoryName)[0]; // Default to SVG
+export function getCategoryLogoPath(categoryName: string, customImage?: string): string {
+    return getCategoryLogoPaths(categoryName, customImage)[0];
 }

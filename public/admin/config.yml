@@ -19,6 +19,48 @@ site_url: https://shibu-pharma.netlify.app
 # Collections Configuration
 collections:
   # ===========================
+  # CATEGORIES COLLECTION
+  # ===========================
+  - name: "categories"
+    label: "Categories"
+    label_singular: "Category"
+    folder: "src/content/categories"
+    create: true
+    delete: false
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    editor:
+      preview: false
+    media_folder: "public/images/categories"
+    public_folder: "/images/categories"
+    fields:
+      - label: "Category Name"
+        name: "name"
+        widget: "string"
+        required: true
+        hint: "Display name (e.g., 'Vitamins & Supplements')"
+
+      - label: "Category Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        hint: "URL-friendly identifier (lowercase with hyphens, e.g., 'vitamins-and-supplements')"
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', "Must be lowercase with hyphens"]
+
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        required: false
+        hint: "Optional description for future use"
+
+      - label: "Category Image"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "Optional category icon/logo (SVG, PNG, or WebP). Will upload to /images/categories/"
+
+  # ===========================
   # PRODUCTS COLLECTION
   # ===========================
   - name: "products"
@@ -38,17 +80,13 @@ collections:
       - { label: "Long Description", name: "longDescription", widget: "text", required: false, hint: "Detailed product information for product page" }
       - label: "Category"
         name: "category"
-        widget: "select"
+        widget: "relation"
         required: true
-        options:
-          - "Analgesics"
-          - "Antibiotics"
-          - "Cardiovascular"
-          - "Diabetes Care"
-          - "Gastrointestinal"
-          - "Respiratory"
-          - "Vitamins & Supplements"
-        hint: "Product category"
+        collection: "categories"
+        search_fields: ["name", "slug"]
+        value_field: "name"
+        display_fields: ["name"]
+        hint: "Select product category"
       - { label: "Price", name: "price", widget: "number", required: true, value_type: "float", min: 0, hint: "Product price (numeric value only)" }
       - label: "Price Unit"
         name: "unit"

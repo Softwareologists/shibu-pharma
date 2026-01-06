@@ -1,6 +1,16 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const categories = defineCollection({
+    loader: glob({ pattern: "**/*.json", base: "./src/content/categories" }),
+    schema: z.object({
+        name: z.string(),
+        slug: z.string(),
+        description: z.string().optional(),
+        image: z.string().optional(),
+    }),
+});
+
 const products = defineCollection({
     loader: glob({ pattern: "**/*.json", base: "./src/content/products" }),
     schema: z.object({
@@ -75,6 +85,7 @@ const contact = defineCollection({
 });
 
 export const collections = {
+    categories,
     products,
     general,
     hero,

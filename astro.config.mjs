@@ -8,11 +8,13 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+  // site: "https://my-astro-site.netlify.app",
+
   adapter: netlify(),
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap()]
+  integrations: [sitemap()],
 });

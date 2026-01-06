@@ -1,0 +1,174 @@
+# Backend Configuration
+backend:
+  name: git-gateway
+  branch: main
+
+# Local Development
+local_backend: true
+
+# Media Library Configuration
+media_folder: "public/images/products"
+public_folder: "/images/products"
+
+# Publishing Mode
+publish_mode: simple
+
+# Site URL
+site_url: https://shibu-pharma.netlify.app
+
+# Collections Configuration
+collections:
+  # ===========================
+  # PRODUCTS COLLECTION
+  # ===========================
+  - name: "products"
+    label: "Products"
+    label_singular: "Product"
+    folder: "src/content/products"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    editor:
+      preview: false
+    fields:
+      - { label: "Product Name", name: "title", widget: "string", required: true, hint: "Full product name (e.g., Aceclofenac-100)" }
+      - { label: "Short Description", name: "description", widget: "string", required: true, hint: "Brief description shown in product cards" }
+      - { label: "Long Description", name: "longDescription", widget: "text", required: false, hint: "Detailed product information for product page" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - "Analgesics"
+          - "Antibiotics"
+          - "Cardiovascular"
+          - "Diabetes Care"
+          - "Gastrointestinal"
+          - "Respiratory"
+          - "Vitamins & Supplements"
+        hint: "Product category"
+      - { label: "Price", name: "price", widget: "number", required: true, value_type: "float", min: 0, hint: "Product price (numeric value only)" }
+      - label: "Price Unit"
+        name: "unit"
+        widget: "select"
+        required: false
+        default: "pack"
+        options:
+          - "pack"
+          - "strip"
+          - "bottle"
+          - "tube"
+          - "vial"
+          - "box"
+      - { label: "Pack Size", name: "packSize", widget: "string", required: false, hint: "e.g., '10 Tablets', '100ml Syrup'" }
+      - { label: "Composition", name: "composition", widget: "string", required: false, hint: "Active ingredients (e.g., 'Aceclofenac 100mg')" }
+      - { label: "Product Image", name: "image", widget: "image", required: false, hint: "Product image (will upload to /images/products)" }
+      - { label: "Featured Product", name: "isFeatured", widget: "boolean", required: false, default: false, hint: "Display in featured products section" }
+
+  # ===========================
+  # SITE SETTINGS - GENERAL
+  # ===========================
+  - name: "general"
+    label: "Site Settings"
+    files:
+      - label: "General Settings"
+        name: "general"
+        file: "src/content/site/general.json"
+        format: "json"
+        fields:
+          - { label: "Site Name", name: "name", widget: "string", required: true }
+          - { label: "Logo", name: "logo", widget: "image", required: true, hint: "Site logo (SVG recommended)" }
+          - { label: "Site Description", name: "description", widget: "string", required: true }
+          - label: "Contact Information"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Address", name: "address", widget: "string", required: true }
+              - { label: "Email", name: "email", widget: "string", required: true }
+              - { label: "Phone", name: "phone", widget: "string", required: true }
+          - label: "Social Media Links"
+            name: "socials"
+            widget: "list"
+            required: true
+            fields:
+              - { label: "Platform Name", name: "name", widget: "string", required: true }
+              - { label: "URL", name: "url", widget: "string", required: true }
+              - label: "Icon"
+                name: "icon"
+                widget: "select"
+                required: false
+                options:
+                  - "facebook"
+                  - "twitter"
+                  - "linkedin"
+                  - "instagram"
+                  - "youtube"
+
+  # ===========================
+  # HOME PAGE - HERO SECTION
+  # ===========================
+  - name: "hero"
+    label: "Homepage - Hero"
+    files:
+      - label: "Hero Section"
+        name: "hero"
+        file: "src/content/site/home/sections/hero.json"
+        format: "json"
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: true, hint: "Main hero headline" }
+          - { label: "Subtitle", name: "subtitle", widget: "text", required: true, hint: "Supporting text below title" }
+          - label: "Primary Call-to-Action"
+            name: "primaryCta"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Button Text", name: "text", widget: "string", required: true }
+              - { label: "Button URL", name: "url", widget: "string", required: true, default: "/products" }
+          - label: "Secondary Call-to-Action"
+            name: "secondaryCta"
+            widget: "object"
+            required: true
+            fields:
+              - { label: "Button Text", name: "text", widget: "string", required: true }
+              - { label: "Button URL", name: "url", widget: "string", required: true, default: "/#contact" }
+
+  # ===========================
+  # HOME PAGE - ABOUT SECTION
+  # ===========================
+  - name: "about"
+    label: "Homepage - About"
+    files:
+      - label: "About Section"
+        name: "about"
+        file: "src/content/site/home/sections/about.json"
+        format: "json"
+        fields:
+          - { label: "Section Label", name: "label", widget: "string", required: true, hint: "Small label above title (e.g., 'About Us')" }
+          - { label: "Section Title", name: "title", widget: "string", required: true }
+          - { label: "Description Paragraph 1", name: "description1", widget: "text", required: true }
+          - { label: "Description Paragraph 2", name: "description2", widget: "text", required: true }
+          - label: "Statistics"
+            name: "stats"
+            widget: "list"
+            required: true
+            min: 1
+            max: 4
+            fields:
+              - { label: "Value", name: "value", widget: "string", required: true, hint: "e.g., '10+', '500+'" }
+              - { label: "Label", name: "label", widget: "string", required: true, hint: "e.g., 'Years Experience'" }
+
+  # ===========================
+  # HOME PAGE - CONTACT SECTION
+  # ===========================
+  - name: "contact"
+    label: "Homepage - Contact"
+    files:
+      - label: "Contact Section"
+        name: "contact"
+        file: "src/content/site/home/sections/contact.json"
+        format: "json"
+        fields:
+          - { label: "Section Title", name: "title", widget: "string", required: true }
+          - { label: "Section Subtitle", name: "subtitle", widget: "string", required: true }

@@ -169,17 +169,21 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
           </div>
           <div class="contact-form-box">
             <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
               class="flex flex-col gap-6"
-              onsubmit="event.preventDefault(); alert('Thank you for your message! We will get in touch');"
             >
+              <input type="hidden" name="form-name" value="contact" />
               <div class="flex flex-col gap-2">
                 <label for="name" class="font-medium">Name</label>
                 <input
                   type="text"
                   id="name"
+                  name="name"
                   required
                   placeholder="Your Name"
-                  class="p-3 border border-gray-200 rounded-md focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
+                  class="p-3 border border-gray-200 rounded-md bg-white focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
                 />
               </div>
               <div class="flex flex-col gap-2">
@@ -187,19 +191,21 @@ const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   required
                   placeholder="your@email.com"
-                  class="p-3 border border-gray-200 rounded-md focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
+                  class="p-3 border border-gray-200 rounded-md bg-white focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
                 />
               </div>
               <div class="flex flex-col gap-2">
                 <label for="message" class="font-medium">Message</label>
                 <textarea
                   id="message"
+                  name="message"
                   rows="4"
                   required
                   placeholder="How can we help?"
-                  class="p-3 border border-gray-200 rounded-md focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
+                  class="p-3 border border-gray-200 rounded-md bg-white focus:outline-hidden focus:border-primary focus:ring-4 focus:ring-accent"
                 ></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Send Message</button

@@ -3,8 +3,8 @@ backend:
   name: git-gateway
   branch: main
 
-# Local Development
-local_backend: true
+# Local Development (set to true when using npx decap-server for local Git testing)
+# local_backend: true
 
 # Media Library Configuration
 media_folder: "public/images/products"

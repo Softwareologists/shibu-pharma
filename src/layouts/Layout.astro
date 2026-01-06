@@ -27,7 +27,8 @@ const {
 
 const finalOgTitle = ogTitle || title;
 const finalOgDescription = ogDescription || description;
-const finalCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, Astro.site).href;
+const finalCanonicalUrl =
+  canonicalUrl || new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -55,9 +56,15 @@ const finalCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, Astro.site
     <meta property="og:site_name" content="Shibu Pharma" />
 
     <!-- JSON-LD Structured Data -->
-    {jsonLd && (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    )}
+    {
+      jsonLd && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(jsonLd)}
+        />
+      )
+    }
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -1,0 +1,11 @@
+{
+    "title": "Iron-100 with Folic Acid",
+    "description": "Iron supplement for anemia prevention.",
+    "category": "Vitamins & Supplements",
+    "image": "https://placehold.co/600x400/FFD700/000000?text=Iron-100",
+    "packSize": "30 Tablets",
+    "composition": "Ferrous Sulfate 100mg + Folic Acid 0.5mg",
+    "longDescription": "Iron-100 prevents and treats iron deficiency anemia, especially in pregnancy and menstruation.",
+    "price": 75,
+    "unit": "pack"
+}

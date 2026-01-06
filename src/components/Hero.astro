@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import heroImage from "../assets/hero.png";
+
+const heroEntry = await getEntry("hero", "hero");
+const { title, subtitle, primaryCta, secondaryCta } = heroEntry.data;
+---
+
+<section class="py-24 overflow-hidden bg-[var(--color-surface)]">
+  <div
+    class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center text-center md:text-left"
+  >
+    <div class="hero-content">
+      <h1
+        class="text-4xl md:text-5.5xl leading-tight font-bold mb-6 tracking-tight"
+      >
+        {title}
+      </h1>
+      <p class="text-xl text-gray-600 mb-10 max-w-[500px] mx-auto md:mx-0">
+        {subtitle}
+      </p>
+      <div class="flex gap-4 justify-center md:justify-start">
+        <a href={primaryCta.url} class="btn btn-primary">{primaryCta.text}</a>
+        <a href={secondaryCta.url} class="btn btn-outline"
+          >{secondaryCta.text}</a
+        >
+      </div>
+    </div>
+    <div class="hero-image relative">
+      <Image
+        src={heroImage}
+        alt={title}
+        width={600}
+        height={600}
+        class="w-full h-auto rounded-2xl"
+        style={{
+          // 1. Horizontal Fade (Left & Right edges)
+          // Fades in from 0% to 5%, stays solid until 95%, fades out to 100%
+          maskImage: `linear-gradient(to right, transparent, black 5%, black 95%, transparent), 
+                   linear-gradient(to bottom, transparent, black 5%, black 95%, transparent)`,
+
+          // 2. Combine them
+          maskComposite: "intersect",
+
+          // 3. Webkit prefix for Chrome/Safari compatibility
+          WebkitMaskImage: `linear-gradient(to right, transparent, black 5%, black 95%, transparent), 
+                         linear-gradient(to bottom, transparent, black 5%, black 95%, transparent)`,
+          WebkitMaskComposite: "source-in",
+        }}
+      />
+    </div>
+  </div>
+</section>

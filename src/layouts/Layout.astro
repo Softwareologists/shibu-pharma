@@ -1,22 +1,72 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  jsonLd?: object;
+}
+
+const {
+  title,
+  description = "Pransev Pharmaceutical - Premium Pharmaceutical Solutions",
+  ogTitle,
+  ogDescription,
+  ogImage,
+  ogType = "website",
+  canonicalUrl,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const finalOgTitle = ogTitle || title;
+const finalOgDescription = ogDescription || description;
+const finalCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, Astro.site).href;
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <!-- Canonical URL -->
+    <link rel="canonical" href={finalCanonicalUrl} />
+
+    <!-- Robots Meta -->
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={finalCanonicalUrl} />
+    <meta property="og:title" content={finalOgTitle} />
+    <meta property="og:description" content={finalOgDescription} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:site_name" content="Shibu Pharma" />
+
+    <!-- JSON-LD Structured Data -->
+    {jsonLd && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

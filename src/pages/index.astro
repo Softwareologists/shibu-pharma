@@ -1,11 +1,215 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ProductCard from "../components/ProductCard.astro";
+import CategoryLogo from "../components/CategoryLogo.astro";
+import { getCollection, getEntry } from "astro:content";
+import { getTopCategories } from "../utils/categories";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const allProducts = await getCollection("products");
+const featuredProducts = allProducts.filter(p => p.data.isFeatured === true).slice(0, 4);
+const topCategories = await getTopCategories(4);
+
+const aboutData = await getEntry("about", "about");
+const contactData = await getEntry("contact", "contact");
+const { label, title, description1, description2, stats } = aboutData.data;
+const { title: contactTitle, subtitle: contactSubtitle } = contactData.data;
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Pransev Pharmaceutical - Health for Everyone">
+  <Header />
+
+  <main>
+    <Hero />
+
+    <section id="about" class="section">
+      <div class="container">
+        <div
+          class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-12 md:gap-16 items-center"
+        >
+          <div class="about-content">
+            <span
+              class="block uppercase text-sm font-semibold text-[var(--color-primary)] tracking-wider mb-4"
+              >{label}</span
+            >
+            <h2 class="text-4xl mb-6">{title}</h2>
+            <p class="text-[var(--color-text-muted)] mb-4 text-[1.1rem]">
+              {description1}
+            </p>
+            <p class="text-[var(--color-text-muted)] mb-4 text-[1.1rem]">
+              {description2}
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {
+              stats.map((stat) => (
+                <div class="bg-[var(--color-accent)] p-8 rounded-xl text-center">
+                  <h3 class="text-4xl text-[var(--color-primary-dark)] mb-2 font-bold">
+                    {stat.value}
+                  </h3>
+                  <p>{stat.label}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="section bg-[var(--color-surface)]">
+      <div class="container">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center mb-12"
+        >
+          <h2 class="text-4xl font-bold mb-4 md:mb-0">Popular Categories</h2>
+          <a href="/products" class="btn btn-outline">View All Products</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {
+            topCategories.map((category) => (
+              <a
+                href={`/products?category=${category.slug}`}
+                class="category-card group block bg-white border border-gray-200 rounded-xl p-6 transition-all duration-200 hover:-translate-y-2 hover:shadow-xl hover:border-[var(--color-primary)]"
+              >
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-14 h-14 rounded-full bg-[var(--color-accent)] flex items-center justify-center group-hover:bg-[var(--color-primary)] transition-colors">
+                    <CategoryLogo
+                      categoryName={category.name}
+                      logoPaths={category.logoPaths}
+                      class="text-[var(--color-primary)] group-hover:text-white transition-colors w-7 h-7"
+                    />
+                  </div>
+                  <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-primary)] text-white font-bold text-lg">
+                    {category.count}
+                  </span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+                  {category.name}
+                </h3>
+                <p class="text-sm text-[var(--color-text-muted)] mb-4">
+                  {category.count}{" "}
+                  {category.count === 1 ? "Product" : "Products"} Available
+                </p>
+                <div class="flex items-center text-[var(--color-primary)] font-medium text-sm">
+                  Explore{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="ml-1 group-hover:translate-x-1 transition-transform"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+
+        <!-- Featured Products Preview -->
+        {featuredProducts.length > 0 && (
+          <div class="mt-12">
+            <h3 class="text-2xl font-bold mb-6">Featured Products</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {
+                featuredProducts.map((product) => (
+                  <a href={`/products/${product.id}`} class="no-underline text-inherit block">
+                    <ProductCard
+                      title={product.data.title}
+                      description={product.data.description}
+                      category={product.data.category}
+                      image={product.data.image}
+                      price={product.data.price}
+                      unit={product.data.unit}
+                    />
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 bg-[var(--color-surface)] rounded-[20px] p-8 md:p-16"
+        >
+          <div class="contact-info">
+            <h2 class="text-4xl mb-4 font-bold">{contactTitle}</h2>
+            <p>{contactSubtitle}</p>
+            <div class="mt-12">
+              <div class="mb-8">
+                <strong class="block text-[var(--color-primary)] mb-2"
+                  >Headquarters</strong
+                >
+                <p>123 Pharma Way, Medical District, Mumbai, India</p>
+              </div>
+              <div class="mb-8">
+                <strong class="block text-[var(--color-primary)] mb-2"
+                  >Email</strong
+                >
+                <p>info@shibupharma.com</p>
+              </div>
+              <div class="mb-8">
+                <strong class="block text-[var(--color-primary)] mb-2"
+                  >Phone</strong
+                >
+                <p>+91 123 456 7890</p>
+              </div>
+            </div>
+          </div>
+          <div class="contact-form-box">
+            <form
+              class="flex flex-col gap-6"
+              onsubmit="event.preventDefault(); alert('Thank you for your message! This is a demo.');"
+            >
+              <div class="flex flex-col gap-2">
+                <label for="name" class="font-medium">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  placeholder="Your Name"
+                  class="p-3 border border-gray-200 rounded-md focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-accent)]"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="email" class="font-medium">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  placeholder="your@email.com"
+                  class="p-3 border border-gray-200 rounded-md focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-accent)]"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="message" class="font-medium">Message</label>
+                <textarea
+                  id="message"
+                  rows="4"
+                  required
+                  placeholder="How can we help?"
+                  class="p-3 border border-gray-200 rounded-md focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-accent)]"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send Message</button
+              >
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
 </Layout>

@@ -1,0 +1,11 @@
+{
+    "title": "Cefi-200 DT",
+    "description": "Cephalosporin antibiotic for bacterial infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Cefi-200",
+    "packSize": "10x10 Strip",
+    "composition": "Cefixime 200mg",
+    "longDescription": "Cefi-200 is a third-generation cephalosporin antibiotic used to treat various bacterial infections including urinary tract infections and respiratory infections.",
+    "price": 125,
+    "unit": "strip"
+}

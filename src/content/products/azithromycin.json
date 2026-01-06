@@ -1,0 +1,11 @@
+{
+    "title": "Azithro-500",
+    "description": "Macrolide antibiotic for respiratory and soft tissue infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Azithro-500",
+    "packSize": "10 Tablets",
+    "composition": "Azithromycin 500mg",
+    "longDescription": "Azithro-500 contains Azithromycin, a macrolide antibiotic effective against respiratory tract infections, skin infections, and sexually transmitted diseases.",
+    "price": 145,
+    "unit": "pack"
+}

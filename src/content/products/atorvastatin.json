@@ -1,0 +1,12 @@
+{
+    "title": "Atorva-20",
+    "description": "Statin for cholesterol management.",
+    "category": "Cardiovascular",
+    "isFeatured": true,
+    "image": "https://placehold.co/600x400/DC143C/ffffff?text=Atorva-20",
+    "packSize": "10 Tablets",
+    "composition": "Atorvastatin 20mg",
+    "longDescription": "Atorva-20 reduces cholesterol levels and lowers the risk of heart disease and stroke.",
+    "price": 125,
+    "unit": "pack"
+}

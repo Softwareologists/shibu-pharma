@@ -1,0 +1,11 @@
+{
+    "title": "Salbutamol Inhaler",
+    "description": "Bronchodilator for asthma and COPD.",
+    "category": "Respiratory",
+    "image": "https://placehold.co/600x400/32CD32/ffffff?text=Salbutamol",
+    "packSize": "200 MDI",
+    "composition": "Salbutamol 100mcg per actuation",
+    "longDescription": "Salbutamol Inhaler provides quick relief from asthma symptoms and bronchospasm.",
+    "price": 185,
+    "unit": "inhaler"
+}

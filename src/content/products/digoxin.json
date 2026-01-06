@@ -1,0 +1,11 @@
+{
+    "title": "Digoxin-0.25",
+    "description": "Cardiac glycoside for heart failure.",
+    "category": "Cardiovascular",
+    "image": "https://placehold.co/600x400/DC143C/ffffff?text=Digoxin-0.25",
+    "packSize": "30 Tablets",
+    "composition": "Digoxin 0.25mg",
+    "longDescription": "Digoxin-0.25 strengthens heart contractions and controls heart rhythm in heart failure patients.",
+    "price": 65,
+    "unit": "pack"
+}

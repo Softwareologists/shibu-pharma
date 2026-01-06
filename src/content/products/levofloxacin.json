@@ -1,0 +1,11 @@
+{
+    "title": "Levo-500",
+    "description": "Fluoroquinolone for respiratory and urinary infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Levo-500",
+    "packSize": "5 Tablets",
+    "composition": "Levofloxacin 500mg",
+    "longDescription": "Levo-500 is a potent fluoroquinolone antibiotic used for treating complicated infections of the respiratory and urinary tracts.",
+    "price": 135,
+    "unit": "pack"
+}

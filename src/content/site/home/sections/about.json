@@ -1,0 +1,20 @@
+{
+    "label": "About Us",
+    "title": "Committed to Quality Healthcare",
+    "description1": "At Pransev Pharmaceutical, we are dedicated to bridging the gap between pharmaceutical manufacturers and healthcare providers.",
+    "description2": "With years of experience in the industry, we ensure timely delivery and maintain the highest standards of quality and safety in our supply chain.",
+    "stats": [
+        {
+            "value": "10+",
+            "label": "Years Experience"
+        },
+        {
+            "value": "500+",
+            "label": "Products"
+        },
+        {
+            "value": "1000+",
+            "label": "Happy Clients"
+        }
+    ]
+}

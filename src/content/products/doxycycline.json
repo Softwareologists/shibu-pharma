@@ -1,0 +1,11 @@
+{
+    "title": "Doxy-100",
+    "description": "Tetracycline antibiotic for various bacterial infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Doxy-100",
+    "packSize": "10x2 Capsules",
+    "composition": "Doxycycline 100mg",
+    "longDescription": "Doxy-100 is a tetracycline antibiotic used to treat acne, respiratory infections, and certain sexually transmitted infections.",
+    "price": 75,
+    "unit": "pack"
+}

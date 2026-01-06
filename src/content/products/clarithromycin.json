@@ -1,0 +1,11 @@
+{
+    "title": "Clarithro-250",
+    "description": "Macrolide antibiotic for respiratory infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Clarithro-250",
+    "packSize": "10 Tablets",
+    "composition": "Clarithromycin 250mg",
+    "longDescription": "Clarithro-250 is a macrolide antibiotic used for pneumonia, bronchitis, and other respiratory tract infections.",
+    "price": 165,
+    "unit": "pack"
+}

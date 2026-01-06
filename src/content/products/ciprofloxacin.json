@@ -1,0 +1,11 @@
+{
+    "title": "Cipro-500",
+    "description": "Fluoroquinolone antibiotic for bacterial infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Cipro-500",
+    "packSize": "10 Tablets",
+    "composition": "Ciprofloxacin 500mg",
+    "longDescription": "Cipro-500 is a broad-spectrum fluoroquinolone antibiotic effective against gram-positive and gram-negative bacteria.",
+    "price": 95,
+    "unit": "pack"
+}

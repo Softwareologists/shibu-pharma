@@ -1,0 +1,11 @@
+{
+    "title": "Aspirin-75",
+    "description": "Low-dose aspirin for cardiovascular protection.",
+    "category": "Analgesics",
+    "image": "https://placehold.co/600x400/4169E1/ffffff?text=Aspirin-75",
+    "packSize": "30 Tablets",
+    "composition": "Acetylsalicylic Acid 75mg",
+    "longDescription": "Aspirin-75 is used for pain relief and as a preventive measure for heart attacks and strokes.",
+    "price": 25,
+    "unit": "pack"
+}

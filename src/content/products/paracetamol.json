@@ -1,0 +1,12 @@
+{
+    "title": "Para-Relief 500",
+    "description": "Effective pain relief and fever reducer. Suitable for headaches, and fever.",
+    "category": "Analgesics",
+    "isFeatured": true,
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Para-Relief+500",
+    "packSize": "10x10 Blister",
+    "composition": "Paracetamol 500mg",
+    "longDescription": "Para-Relief 500 provides fast and effective relief from mild to moderate pain and fever. It is gentle on the stomach and suitable for daily use when taken as directed.",
+    "price": 25,
+    "unit": "strip"
+}

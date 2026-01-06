@@ -1,0 +1,11 @@
+{
+    "title": "Clav-625",
+    "description": "Combination antibiotic with enhanced effectiveness.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Clav-625",
+    "packSize": "10 Tablets",
+    "composition": "Amoxicillin 500mg + Clavulanic Acid 125mg",
+    "longDescription": "Clav-625 combines amoxicillin with clavulanic acid to overcome antibiotic resistance and treat various bacterial infections.",
+    "price": 155,
+    "unit": "pack"
+}

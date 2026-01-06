@@ -1,0 +1,11 @@
+{
+    "title": "Metroni-400",
+    "description": "Antibiotic and antiprotozoal medication.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Metroni-400",
+    "packSize": "15 Tablets",
+    "composition": "Metronidazole 400mg",
+    "longDescription": "Metroni-400 is effective against anaerobic bacteria and certain parasites, commonly used for dental and gastrointestinal infections.",
+    "price": 45,
+    "unit": "pack"
+}

@@ -1,0 +1,11 @@
+{
+    "title": "Ibuprofen-400",
+    "description": "Non-steroidal anti-inflammatory drug for pain relief.",
+    "category": "Analgesics",
+    "image": "https://placehold.co/600x400/4169E1/ffffff?text=Ibuprofen-400",
+    "packSize": "20 Tablets",
+    "composition": "Ibuprofen 400mg",
+    "longDescription": "Ibuprofen-400 is a widely used NSAID for reducing inflammation, fever, and pain from various conditions.",
+    "price": 35,
+    "unit": "pack"
+}

@@ -1,0 +1,12 @@
+{
+    "title": "Metformin-500",
+    "description": "First-line diabetes medication.",
+    "category": "Diabetes Care",
+    "isFeatured": true,
+    "image": "https://placehold.co/600x400/FF8C00/ffffff?text=Metformin-500",
+    "packSize": "30 Tablets",
+    "composition": "Metformin Hydrochloride 500mg",
+    "longDescription": "Metformin-500 is the most common medication for type 2 diabetes, improving blood sugar control.",
+    "price": 55,
+    "unit": "pack"
+}

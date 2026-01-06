@@ -1,0 +1,189 @@
+---
+interface Props {
+    currentPage: number;
+    totalPages: number;
+    baseUrl: string;
+    queryParams?: Record<string, string>;
+}
+
+const { currentPage, totalPages, baseUrl, queryParams = {} } = Astro.props;
+
+// Helper function to build URL with query params
+function buildUrl(page: number): string {
+    const params = new URLSearchParams(queryParams);
+    params.set('page', page.toString());
+    return `${baseUrl}?${params.toString()}`;
+}
+
+// Calculate page range to display
+const maxPagesToShow = 7;
+let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+if (endPage - startPage < maxPagesToShow - 1) {
+    startPage = Math.max(1, endPage - maxPagesToShow + 1);
+}
+
+const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+const showFirstPage = startPage > 1;
+const showLastPage = endPage < totalPages;
+---
+
+{totalPages > 1 && (
+    <nav class="pagination" aria-label="Pagination Navigation">
+        <ul class="pagination-list">
+            {/* Previous Button */}
+            {currentPage > 1 ? (
+                <li>
+                    <a href={buildUrl(currentPage - 1)} class="pagination-link pagination-previous" aria-label="Previous page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                        Previous
+                    </a>
+                </li>
+            ) : (
+                <li>
+                    <span class="pagination-link pagination-previous disabled">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                        Previous
+                    </span>
+                </li>
+            )}
+
+            {/* First Page */}
+            {showFirstPage && (
+                <>
+                    <li>
+                        <a href={buildUrl(1)} class="pagination-link" aria-label="Page 1">1</a>
+                    </li>
+                    {startPage > 2 && (
+                        <li><span class="pagination-ellipsis">…</span></li>
+                    )}
+                </>
+            )}
+
+            {/* Page Numbers */}
+            {pages.map(page => (
+                <li>
+                    {page === currentPage ? (
+                        <span class="pagination-link current" aria-current="page" aria-label={`Page ${page}, current page`}>{page}</span>
+                    ) : (
+                        <a href={buildUrl(page)} class="pagination-link" aria-label={`Page ${page}`}>{page}</a>
+                    )}
+                </li>
+            ))}
+
+            {/* Last Page */}
+            {showLastPage && (
+                <>
+                    {endPage < totalPages - 1 && (
+                        <li><span class="pagination-ellipsis">…</span></li>
+                    )}
+                    <li>
+                        <a href={buildUrl(totalPages)} class="pagination-link" aria-label={`Page ${totalPages}`}>{totalPages}</a>
+                    </li>
+                </>
+            )}
+
+            {/* Next Button */}
+            {currentPage < totalPages ? (
+                <li>
+                    <a href={buildUrl(currentPage + 1)} class="pagination-link pagination-next" aria-label="Next page">
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                </li>
+            ) : (
+                <li>
+                    <span class="pagination-link pagination-next disabled">
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </span>
+                </li>
+            )}
+        </ul>
+    </nav>
+)}
+
+<style>
+    .pagination {
+        margin: 2rem 0;
+    }
+
+    .pagination-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pagination-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 2.5rem;
+        height: 2.5rem;
+        padding: 0 0.75rem;
+        border: 2px solid var(--color-border);
+        border-radius: 8px;
+        background: white;
+        color: var(--color-text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .pagination-link:hover:not(.disabled):not(.current) {
+        border-color: var(--color-primary);
+        background: var(--color-accent);
+        color: var(--color-primary);
+    }
+
+    .pagination-link.current {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+        cursor: default;
+    }
+
+    .pagination-link.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .pagination-previous,
+    .pagination-next {
+        font-weight: 600;
+    }
+
+    .pagination-ellipsis {
+        padding: 0 0.5rem;
+        color: var(--color-text-muted);
+    }
+
+    @media (max-width: 640px) {
+        .pagination-previous span,
+        .pagination-next span {
+            display: none;
+        }
+
+        .pagination-link {
+            min-width: 2rem;
+            height: 2rem;
+            padding: 0 0.5rem;
+        }
+    }
+</style>

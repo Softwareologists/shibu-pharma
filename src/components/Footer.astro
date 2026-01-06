@@ -1,0 +1,35 @@
+---
+import { getEntry } from 'astro:content';
+
+const currentYear = new Date().getFullYear();
+const general = await getEntry('general', 'general');
+if (!general) throw new Error('General content not found');
+const { name, contact } = general!.data;
+---
+
+<footer class="border-t border-gray-200 bg-[var(--color-surface)] py-6">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 text-[0.9rem] text-[var(--color-text-muted)]">
+      <p>&copy; {currentYear} {name}</p>
+      <span class="hidden md:inline text-gray-300">|</span>
+      <a href={`tel:${contact.phone}`} class="hover:text-[var(--color-primary)] transition-colors">{contact.phone}</a>
+      <span class="hidden md:inline text-gray-300">|</span>
+      <a href={`mailto:${contact.email}`} class="hover:text-[var(--color-primary)] transition-colors">{contact.email}</a>
+      <span class="hidden md:inline text-gray-300">|</span>
+      <p>{contact.address}</p>
+    </div>
+
+    <div class="mt-3 pt-3 border-t border-gray-100 text-center text-[0.85rem] text-[var(--color-text-muted)]">
+      <p>
+        Built by
+        <a href="https://softwareologists.tech" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-primary)] transition-colors">
+          Softwareologists
+        </a>
+        <span class="hidden md:inline text-gray-300 mx-2">|</span>
+        <a href="mailto:info@softwareologists.tech" class="hover:text-[var(--color-primary)] transition-colors">
+          info@softwareologists.tech
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

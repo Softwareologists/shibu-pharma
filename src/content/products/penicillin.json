@@ -1,0 +1,11 @@
+{
+    "title": "Pencillin-VK 250",
+    "description": "Penicillin antibiotic for streptococcal infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Penicillin-VK",
+    "packSize": "10x10 Tablets",
+    "composition": "Phenoxymethylpenicillin 250mg",
+    "longDescription": "Penicillin-VK is effective against streptococcal infections, dental infections, and respiratory infections.",
+    "price": 55,
+    "unit": "pack"
+}

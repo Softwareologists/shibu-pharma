@@ -1,0 +1,235 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import { getCategorySlug } from "../../utils/categories";
+
+export async function getStaticPaths() {
+  const products = await getCollection("products");
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const canonicalUrl = `${Astro.site}products/${product.id}`;
+
+// Get related products (same category, exclude current, limit 4)
+const allProducts = await getCollection("products");
+const relatedProducts = allProducts
+  .filter(
+    (p) => p.data.category === product.data.category && p.id !== product.id
+  )
+  .slice(0, 4);
+
+// Build breadcrumb items
+const categorySlug = getCategorySlug(product.data.category);
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Products", href: "/products" },
+  { label: product.data.category, href: `/products?category=${categorySlug}` },
+  { label: product.data.title },
+];
+
+// JSON-LD Product structured data
+const productJsonLd = {
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  name: product.data.title,
+  description: product.data.longDescription || product.data.description,
+  image: product.data.image,
+  brand: {
+    "@type": "Brand",
+    name: "Pransev Pharmaceutical",
+  },
+  offers: {
+    "@type": "Offer",
+    price: product.data.price,
+    priceCurrency: "INR",
+    availability: "https://schema.org/InStock",
+  },
+  category: product.data.category,
+};
+---
+
+<Layout
+  title={`${product.data.title} - Shibu Pharma`}
+  description={product.data.longDescription || product.data.description}
+  ogTitle={product.data.title}
+  ogDescription={product.data.description}
+  ogImage={product.data.image}
+  ogType="product"
+  canonicalUrl={canonicalUrl}
+  jsonLd={productJsonLd}
+>
+  <Header />
+
+  <main class="page-content">
+    <!-- Breadcrumb -->
+    <Breadcrumb items={breadcrumbItems} />
+
+    <!-- Product Details Section -->
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+          <!-- Product Image -->
+          <div class="relative">
+            {
+              product.data.image ? (
+                <Image
+                  src={product.data.image}
+                  alt={product.data.title}
+                  width={600}
+                  height={400}
+                  class="w-full h-auto rounded-2xl shadow-md"
+                />
+              ) : (
+                <div class="w-full aspect-[3/2] bg-[var(--color-surface)] rounded-2xl" />
+              )
+            }
+          </div>
+
+          <!-- Product Info -->
+          <div class="flex flex-col gap-4">
+            <h1
+              class="text-4xl font-bold text-[var(--color-primary-dark)] m-0 leading-tight"
+            >
+              {product.data.title}
+            </h1>
+            <p
+              class="text-lg leading-relaxed text-[var(--color-text-muted)] m-0"
+            >
+              {product.data.longDescription || product.data.description}
+            </p>
+
+            <!-- Product Details Grid -->
+            <div
+              class="flex flex-col gap-2 p-4 bg-[var(--color-surface)] rounded-xl border border-gray-200"
+            >
+              {
+                product.data.composition && (
+                  <div class="grid grid-cols-[140px_1fr] md:grid-cols-[120px_1fr] gap-4">
+                    <span class="font-semibold text-[var(--color-text)] text-[0.9375rem]">
+                      Composition
+                    </span>
+                    <span class="text-[var(--color-text-muted)] text-[0.9375rem]">
+                      {product.data.composition}
+                    </span>
+                  </div>
+                )
+              }
+              {
+                product.data.packSize && (
+                  <div class="grid grid-cols-[140px_1fr] md:grid-cols-[120px_1fr] gap-4">
+                    <span class="font-semibold text-[var(--color-text)] text-[0.9375rem]">
+                      Pack Size
+                    </span>
+                    <span class="text-[var(--color-text-muted)] text-[0.9375rem]">
+                      {product.data.packSize}
+                    </span>
+                  </div>
+                )
+              }
+              <div
+                class="grid grid-cols-[140px_1fr] md:grid-cols-[120px_1fr] gap-4"
+              >
+                <span
+                  class="font-semibold text-[var(--color-text)] text-[0.9375rem]"
+                  >Category</span
+                >
+                <span class="text-[var(--color-text-muted)] text-[0.9375rem]"
+                  >{product.data.category}</span
+                >
+              </div>
+            </div>
+
+            <!-- Price & CTA Combined -->
+            <div
+              class="flex flex-col sm:flex-row items-center gap-4 p-4 bg-white rounded-xl border border-[var(--color-primary)] shadow-sm"
+            >
+              <div class="flex items-center gap-2 flex-1">
+                <div
+                  class="text-3xl md:text-4xl font-bold text-[var(--color-primary)]"
+                >
+                  {
+                    new Intl.NumberFormat("en-IN", {
+                      style: "currency",
+                      currency: "INR",
+                    }).format(product.data.price)
+                  }
+                  {
+                    product.data.unit && (
+                      <span class="text-xl md:text-2xl font-normal text-gray-600">
+                        {" "}
+                        / {product.data.unit.toLowerCase()}
+                      </span>
+                    )
+                  }
+                </div>
+              </div>
+              <div class="hidden sm:block w-px h-12 bg-gray-300"></div>
+              <a
+                href="/#contact"
+                class="btn btn-primary py-3 px-6 text-base font-semibold inline-flex items-center gap-2 whitespace-nowrap"
+              >
+                Get a Quote
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Products Section -->
+    {
+      relatedProducts.length > 0 && (
+        <section class="section bg-accent">
+          <div class="container">
+            <h2 class="text-3xl font-bold text-[var(--color-primary-dark)] mb-8 text-center">
+              Related Products
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {relatedProducts.map((relatedProduct) => (
+                <a
+                  href={`/products/${relatedProduct.id}`}
+                  class="no-underline text-inherit block transition-opacity duration-200 hover:opacity-90"
+                >
+                  <ProductCard
+                    title={relatedProduct.data.title}
+                    description={relatedProduct.data.description}
+                    category={relatedProduct.data.category}
+                    image={relatedProduct.data.image}
+                    price={relatedProduct.data.price}
+                    unit={product.data.unit}
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,11 @@
+{
+    "title": "Sitagliptin-100",
+    "description": "DPP-4 inhibitor for type 2 diabetes.",
+    "category": "Diabetes Care",
+    "image": "https://placehold.co/600x400/FF8C00/ffffff?text=Sitagliptin-100",
+    "packSize": "10 Tablets",
+    "composition": "Sitagliptin Phosphate 100mg",
+    "longDescription": "Sitagliptin-100 helps regulate blood sugar levels by increasing insulin release and decreasing glucose production.",
+    "price": 195,
+    "unit": "pack"
+}

@@ -1,0 +1,22 @@
+{
+    "name": "Pransev Pharmaceutical Private Limited",
+    "logo": "/images/logo.svg",
+    "description": "Excellence in Pharmaceutical Distribution",
+    "contact": {
+        "address": "123 Pharma Way, Med City, ST 12345",
+        "email": "info@shibupharma.com",
+        "phone": "+91 98765 43210"
+    },
+    "socials": [
+        {
+            "name": "Facebook",
+            "url": "https://facebook.com",
+            "icon": "facebook"
+        },
+        {
+            "name": "LinkedIn",
+            "url": "https://linkedin.com",
+            "icon": "linkedin"
+        }
+    ]
+}

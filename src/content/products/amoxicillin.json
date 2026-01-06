@@ -1,0 +1,12 @@
+{
+    "title": "Amoxi-Care 250 DT",
+    "description": "Broad-spectrum antibiotic for bacterial infections.",
+    "category": "Antibiotics",
+    "isFeatured": true,
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Amoxi-Care+250",
+    "packSize": "10x10 Strip",
+    "composition": "Amoxicillin Trihydrate 250mg",
+    "longDescription": "Amoxi-Care 250 DT is a dispersible tablet formulation of Amoxicillin, a penicillin-type antibiotic used to treat a wide variety of bacterial infections.",
+    "price": 85,
+    "unit": "strip"
+}

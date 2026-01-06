@@ -1,0 +1,11 @@
+{
+    "title": "Nitro-100",
+    "description": "Antibiotic for urinary tract infections.",
+    "category": "Antibiotics",
+    "image": "https://placehold.co/600x400/008080/ffffff?text=Nitro-100",
+    "packSize": "20 Capsules",
+    "composition": "Nitrofurantoin 100mg",
+    "longDescription": "Nitro-100 is specifically used to treat and prevent urinary tract infections caused by certain bacteria.",
+    "price": 85,
+    "unit": "pack"
+}

@@ -1,0 +1,11 @@
+{
+    "title": "Gliclazide-80",
+    "description": "Modified-release diabetes medication.",
+    "category": "Diabetes Care",
+    "image": "https://placehold.co/600x400/FF8C00/ffffff?text=Gliclazide-80",
+    "packSize": "15 Tablets",
+    "composition": "Gliclazide 80mg MR",
+    "longDescription": "Gliclazide-80 MR provides sustained blood sugar control with once-daily dosing.",
+    "price": 105,
+    "unit": "pack"
+}

@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Colors - Muted blue inspired by logo */
+    --color-primary: #4A90C8;
+    --color-primary-dark: #3A7AB3;
+
+    /* Accent & Surface - Cyan-tinted neutrals from hero image */
+    --color-accent: #E8F4F8;
+    --color-surface: #F5F9FB;
+
+    /* Borders */
+    --color-border: #D1E3ED;
+
+    /* Text Colors - Blue-tinted grays */
+    --color-text-main: #2C3E50;
+    --color-text: #2C3E50;
+    --color-text-muted: #64748B;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-block px-6 py-3 rounded font-medium text-center transition-colors duration-200 border border-transparent;
+  }
+
+  .btn-primary {
+    @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)];
+  }
+
+  .btn-outline {
+    @apply border-[var(--color-primary)] text-[var(--color-primary)] bg-transparent hover:bg-[var(--color-accent)];
+  }
+
+  .section {
+    @apply py-20;
+  }
+
+  .container {
+    @apply max-w-[1200px] mx-auto px-6;
+  }
+}

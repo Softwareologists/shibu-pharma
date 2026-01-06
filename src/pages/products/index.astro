@@ -1,0 +1,198 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import CategoryDropdown from '../../components/CategoryDropdown.astro';
+import SortControls from '../../components/SortControls.astro';
+import { getCollection } from 'astro:content';
+import { getAllCategories, getCategoryFromSlug } from '../../utils/categories';
+
+// Get URL parameters
+const url = new URL(Astro.request.url);
+const currentPage = parseInt(url.searchParams.get('page') || '1', 10);
+const categorySlug = url.searchParams.get('category');
+const sortParam = url.searchParams.get('sort') || 'newest';
+const searchQuery = url.searchParams.get('q')?.trim().toLowerCase();
+
+// Pagination settings
+const productsPerPage = 20;
+
+// Get all products and categories
+let allProducts = await getCollection('products');
+const categories = await getAllCategories();
+const sortedCategories = categories.sort((a, b) => b.count - a.count);
+
+// Get selected category name (for display)
+const selectedCategoryName = categorySlug ? await getCategoryFromSlug(categorySlug) : null;
+
+// Filter by category if specified
+if (categorySlug && selectedCategoryName) {
+    allProducts = allProducts.filter(
+        product => product.data.category === selectedCategoryName
+    );
+}
+
+// Search by query if specified
+if (searchQuery) {
+    allProducts = allProducts.filter(product => {
+        const titleMatch = product.data.title.toLowerCase().includes(searchQuery);
+        const descMatch = product.data.description.toLowerCase().includes(searchQuery);
+        const categoryMatch = product.data.category.toLowerCase().includes(searchQuery);
+        return titleMatch || descMatch || categoryMatch;
+    });
+}
+
+// Sort products
+const sortedProducts = [...allProducts].sort((a, b) => {
+    switch (sortParam) {
+        case 'price-asc':
+            return a.data.price - b.data.price;
+        case 'price-desc':
+            return b.data.price - a.data.price;
+        case 'name-asc':
+            return a.data.title.localeCompare(b.data.title);
+        case 'name-desc':
+            return b.data.title.localeCompare(a.data.title);
+        case 'newest':
+        default:
+            // Keep original order (newest first)
+            return 0;
+    }
+});
+
+// Calculate pagination
+const totalProducts = sortedProducts.length;
+const totalPages = Math.ceil(totalProducts / productsPerPage);
+const safeCurrentPage = Math.max(1, Math.min(currentPage, totalPages || 1));
+
+// Get products for current page
+const startIndex = (safeCurrentPage - 1) * productsPerPage;
+const endIndex = startIndex + productsPerPage;
+const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
+
+// Build query params for pagination/navigation
+const queryParams: Record<string, string> = {};
+if (categorySlug) queryParams.category = categorySlug;
+if (sortParam && sortParam !== 'newest') queryParams.sort = sortParam;
+if (searchQuery) queryParams.q = searchQuery;
+---
+
+<Layout title="Our Products - Shibu Pharma">
+  <Header />
+  
+  <main class="page-content">
+    <section class="section">
+      <div class="container">
+        <!-- Integrated Title + Search Panel -->
+        <div class="max-w-3xl mx-auto mb-12 text-center">
+          <h1 class="text-4xl md:text-5xl font-bold text-[var(--color-primary-dark)] mb-6">
+            {selectedCategoryName
+              ? `${selectedCategoryName} Products`
+              : 'Our Medicines'}
+          </h1>
+
+          <!-- Search Form -->
+          <form method="GET" action="/products">
+          <div class="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-xl px-4 py-3 transition-all focus-within:border-[var(--color-primary)] focus-within:ring-4 focus-within:ring-[var(--color-accent)]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-400 flex-shrink-0">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input
+              type="search"
+              name="q"
+              placeholder="Search products by name, description, or category..."
+              value={searchQuery || ''}
+              class="flex-1 border-none outline-none text-base bg-transparent placeholder:text-gray-400"
+              aria-label="Search products"
+            />
+            {categorySlug && <input type="hidden" name="category" value={categorySlug} />}
+            {sortParam && sortParam !== 'newest' && <input type="hidden" name="sort" value={sortParam} />}
+            <button type="submit" class="bg-[var(--color-primary)] text-white px-5 py-2 rounded-lg font-semibold hover:bg-[var(--color-primary-dark)] transition-all hover:-translate-y-0.5">
+              Search
+            </button>
+          </div>
+          {searchQuery && (
+            <div class="flex items-center justify-between mt-4 px-4 py-3 bg-[var(--color-accent)] rounded-lg">
+              <p class="m-0 text-gray-700">
+                Searching for: <strong>"{searchQuery}"</strong>
+              </p>
+              <a href={`/products${categorySlug ? `?category=${categorySlug}` : ''}`} class="text-[var(--color-primary)] no-underline font-semibold hover:opacity-70 transition-opacity">
+                Clear search
+              </a>
+            </div>
+          )}
+          </form>
+        </div>
+
+        <!-- Filter and Sort Toolbar -->
+        <div class="flex items-center gap-6 mb-8 p-4 md:p-6 bg-gray-50 rounded-xl flex-wrap md:flex-nowrap">
+          <CategoryDropdown
+            categories={sortedCategories}
+            selectedCategory={categorySlug || undefined}
+            currentParams={queryParams}
+          />
+
+          <div class="hidden md:block flex-1 min-w-4"></div>
+
+          <div class="w-full md:w-auto order-first md:order-none text-center md:text-left">
+            <p class="text-gray-600 text-sm m-0">
+              Showing <strong class="text-gray-900 font-semibold">{startIndex + 1}-{Math.min(endIndex, totalProducts)}</strong> of <strong class="text-gray-900 font-semibold">{totalProducts}</strong> products
+            </p>
+          </div>
+
+          <SortControls currentSort={sortParam} currentParams={queryParams} />
+        </div>
+
+        <!-- Products Grid -->
+        {paginatedProducts.length > 0 ? (
+          <>
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 md:gap-8 mb-12" data-pagefind-body>
+              {paginatedProducts.map(product => (
+                <div
+                  class="product-item"
+                  data-pagefind-filter={`category:${product.data.category}`}
+                >
+                  <a href={`/products/${product.id}`} class="no-underline text-inherit block">
+                    <ProductCard
+                      title={product.data.title}
+                      description={product.data.description}
+                      category={product.data.category}
+                      image={product.data.image}
+                      price={product.data.price}
+                      unit={product.data.unit}
+                    />
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <!-- Pagination -->
+            <Pagination 
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              baseUrl="/products"
+              queryParams={queryParams}
+            />
+          </>
+        ) : (
+          <div class="text-center py-16 px-8 text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mx-auto mb-6 opacity-30">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <h3 class="text-2xl text-gray-900 mb-2">No products found</h3>
+            <p class="text-lg mb-8">Try adjusting your filters or search terms</p>
+            <a href="/products" class="btn btn-primary">Clear All Filters</a>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

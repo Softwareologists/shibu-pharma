@@ -1,0 +1,11 @@
+{
+    "title": "ProbiotiX Daily",
+    "description": "Multi-strain probiotic for digestive health.",
+    "category": "Vitamins & Supplements",
+    "image": "https://placehold.co/600x400/FFD700/000000?text=ProbiotiX",
+    "packSize": "30 Capsules",
+    "composition": "Probiotic Blend 10 Billion CFU",
+    "longDescription": "ProbiotiX Daily supports digestive health, immune function, and maintains healthy gut flora.",
+    "price": 425,
+    "unit": "pack"
+}

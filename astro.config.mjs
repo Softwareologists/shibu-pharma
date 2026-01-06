@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // site: "https://my-astro-site.netlify.app",
+  site: "https://shibu-pharma.netlify.app",
 
   adapter: netlify(),
 
